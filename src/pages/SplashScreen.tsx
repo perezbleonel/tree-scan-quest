@@ -6,7 +6,7 @@ const SplashScreen = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/tree-info');
+      navigate('/nickname');
     }, 3000);
 
     return () => clearTimeout(timer);
