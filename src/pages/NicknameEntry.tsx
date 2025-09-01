@@ -13,7 +13,7 @@ const NicknameEntry = () => {
   const handleContinue = () => {
     if (nickname.trim()) {
       localStorage.setItem('tr33-nickname', nickname.trim());
-      navigate('/tree-info');
+      navigate('/welcome');
     }
   };
 
