@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Trophy } from "lucide-react";
+import { ArrowLeft, Loader2, Trophy } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/supabaseClient";
+import { useEffect, useState } from "react";
 
 interface Player {
   position: number;
@@ -10,7 +12,7 @@ interface Player {
   isCurrentUser?: boolean;
 }
 
-const mockPlayers: Player[] = [
+/* const mockPlayers: Player[] = [
   { position: 1, name: "María González", points: 3250 },
   { position: 2, name: "Carlos Rodríguez", points: 2890 },
   { position: 3, name: "Ana García", points: 2100 },
@@ -20,7 +22,7 @@ const mockPlayers: Player[] = [
   { position: 7, name: "David Sánchez", points: 850 },
   { position: 8, name: "Elena Ruiz", points: 720 },
 ];
-
+ */
 const getMedalIcon = (position: number) => {
   switch (position) {
     case 1:
@@ -36,8 +38,41 @@ const getMedalIcon = (position: number) => {
 
 const Leaderboard = () => {
   const navigate = useNavigate();
-  const currentUser = mockPlayers.find(player => player.isCurrentUser);
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const currentUserNickname = localStorage.getItem('tr33-nickname');
 
+    useEffect(() => {
+    const fetchLeaderboard = async () => {
+      const { data, error } = await supabase.rpc('get_leaderboard');
+      
+      if (error) {
+        console.error("Error al cargar la tabla de líderes:", error);
+        setPlayers([]);
+      } else if (data) {
+        const formattedPlayers = data.map((player, index) => ({
+          position: index + 1,
+          name: player.nickname,
+          points: player.total_points,
+          isCurrentUser: player.nickname === currentUserNickname,
+        }));
+        setPlayers(formattedPlayers);
+      }
+      setIsLoading(false);
+    };
+
+    fetchLeaderboard();
+  }, [currentUserNickname]); 
+
+  const currentUser = players.find(player => player.isCurrentUser);
+
+    if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-background font-poppins">
       
@@ -91,12 +126,12 @@ const Leaderboard = () => {
         {/* Leaderboard List */}
         <Card className="shadow-lg">
           <CardContent className="p-0">
-            {mockPlayers.map((player, index) => (
+            {players.map((player, index) => (
               <div
                 key={player.position}
                 className={`
                   flex items-center justify-between p-4 
-                  ${index !== mockPlayers.length - 1 ? 'border-b border-border' : ''}
+                  ${index !== players.length - 1 ? 'border-b border-border' : ''}
                   ${player.isCurrentUser ? 'bg-secondary/50' : 'bg-background'}
                 `}
               >
@@ -142,7 +177,7 @@ const Leaderboard = () => {
           <Button 
             variant="outline"
             className="w-full py-6 text-base font-semibold rounded-xl"
-            onClick={() => navigate('/tree-info')}
+            onClick={() => navigate('/welcome')}
           >
             Volver a Información del Árbol
           </Button>
