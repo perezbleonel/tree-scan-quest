@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Tr33 - A Lovable project</string>
+    <string name="title_activity_main">Tr33 - A Lovable project</string>
+    <string name="package_name">app.tr33.apk</string>
+    <string name="custom_url_scheme">app.tr33.apk</string>
+</resources>
