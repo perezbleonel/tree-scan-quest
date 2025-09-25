@@ -130,12 +130,12 @@ const TreeInfo = () => {
 
             <Separator className="my-4" />
 
-            {/* Precision de imagen */}
+            {/* Precisión de imagen */}
             <div className="flex items-center mb-4">
               <Leaf className="h-5 w-5 text-primary mr-3" />
               <div>
                 <span className="text-base text-foreground">
-                  Precision de lectura:
+                  Precisión de lectura:
                 </span>
                 <span className="font-semibold text-foreground ml-1">
                   {result.score}%
