@@ -151,6 +151,13 @@ const Welcome = () => {
                 </>
               )}
             </Button>
+                      <Button
+            variant="outline"
+            className="w-full py-6 text-base font-semibold rounded-xl"
+            onClick={() => navigate('/leaderboard')}
+          >
+            Ver Tabla de Líderes
+          </Button>
             {/* ✨ 7. Mostramos un mensaje de error si algo sale mal */}
             {error && (
               <p className="mt-4 text-sm text-destructive">{error}</p>

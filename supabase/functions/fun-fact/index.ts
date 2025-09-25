@@ -1,15 +1,11 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { corsHeaders } from './shared/cors.ts';
 // NOTE: Ensure you have an OPENAI_API_KEY secret set in your Supabase project.
 // npx supabase secrets set OPENAI_API_KEY "sk-..."
-/* const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
- */const GOOGLE_API_KEY = Deno.env.get("GOOGLE_API_KEY");
+/* const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");*/
+const GOOGLE_API_KEY = Deno.env.get("GOOGLE_API_KEY");
 
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
 
 serve(async (req) => {
   // Handle CORS preflight requests for browser-based clients
@@ -24,7 +20,6 @@ serve(async (req) => {
     }
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GOOGLE_API_KEY}`;
 
-    // You can replace this with any LLM API call
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
