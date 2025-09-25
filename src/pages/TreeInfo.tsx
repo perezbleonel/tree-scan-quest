@@ -130,12 +130,12 @@ const TreeInfo = () => {
 
             <Separator className="my-4" />
 
-            {/* Carbon Capture Section */}
+            {/* Precision de imagen */}
             <div className="flex items-center mb-4">
               <Leaf className="h-5 w-5 text-primary mr-3" />
               <div>
                 <span className="text-base text-foreground">
-                  Captura de Carbono:
+                  Precision de lectura:
                 </span>
                 <span className="font-semibold text-foreground ml-1">
                   {result.score}%
